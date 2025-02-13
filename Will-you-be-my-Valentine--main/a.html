@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #ffb6c1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: gray;
+            margin-bottom: 50px;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            color: red;
+            animation: float 5s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-100vh);
+            }
+        }
+
+        .image {
+            position: absolute;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .image.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Valentine's Day! ❤️</h1>
+    <p>Wishing you a day full of love and happiness!</p>
+
+    <div id="hearts"></div>
+    <div id="images"></div>
+
+    <script>
+        // List of image URLs
+        const imageUrls = [
+            "/img/anh1.jpg",
+            "/img/anh2.jpg",
+            "/img/anh3.jpg",
+            "/img/anh4.jpg",
+            "/img/anh5.jpg",
+        ];
+
+        // Generate hearts with random positions, sizes, and delays
+        const generateHearts = (count) => {
+            const hearts = [];
+            for (let i = 0; i < count; i++) {
+                hearts.push({
+                    id: i,
+                    left: Math.random() * 100,
+                    delay: Math.random() * 5,
+                    size: Math.random() * 30 + 10,
+                });
+            }
+            return hearts;
+        };
+
+        // Generate images with random positions and larger sizes
+        const generateImages = (count) => {
+            const images = [];
+            for (let i = 0; i < count; i++) {
+                let top;
+                do {
+                    top = Math.random() * 100;
+                } while (top > 30 && top < 70); // Avoid overlapping with text
+                images.push({
+                    id: i,
+                    left: Math.random() * 100,
+                    top,
+                    size: Math.random() * 100 + 100, // Increased size range
+                    src: imageUrls[i % imageUrls.length], // Cycle through images
+                });
+            }
+            return images;
+        };
+
+        // Create hearts and images and append to the DOM
+        const hearts = generateHearts(20);
+        const images = generateImages(10);
+
+        const heartsContainer = document.getElementById("hearts");
+        hearts.forEach((heart) => {
+            const heartElement = document.createElement("div");
+            heartElement.classList.add("heart");
+            heartElement.style.left = `${heart.left}%`;
+            heartElement.style.fontSize = `${heart.size}px`;
+            heartElement.style.animationDelay = `${heart.delay}s`;
+            heartElement.innerHTML = "❤️";
+            heartsContainer.appendChild(heartElement);
+        });
+
+        const imagesContainer = document.getElementById("images");
+        const imageElements = [];
+        images.forEach((img) => {
+            const imageElement = document.createElement("img");
+            imageElement.classList.add("image");
+            imageElement.src = img.src;
+            imageElement.style.width = `${img.size}px`; // Updated size
+            imageElement.style.height = `${img.size}px`; // Updated size
+            imageElement.style.top = `${img.top}%`;
+            imageElement.style.left = `${img.left}%`;
+            imagesContainer.appendChild(imageElement);
+            imageElements.push(imageElement);
+        });
+
+        // Create a cycle for showing two images at a time
+        let currentIndex = 0;
+        setInterval(() => {
+            // Hide all images first
+            imageElements.forEach((img) => img.classList.remove("show"));
+            
+            // Show two images at a time
+            const nextIndex = (currentIndex + 1) % imageElements.length;
+            imageElements[currentIndex].classList.add("show");
+            imageElements[nextIndex].classList.add("show");
+
+            // Move to the next pair of images
+            currentIndex = (currentIndex + 2) % imageElements.length; // Increase by 2 to show next pair
+        }, 3000); // Change image every 3 seconds
+    </script>
+</body>
+</html>
