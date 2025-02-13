@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Centered Page with Pink Background</title>
+    <style>
+        /* Căn giữa nội dung và tạo nền màu hồng cho toàn trang */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Chiếm toàn bộ chiều cao của màn hình */
+            display: flex;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            background-color: #ffb6c1; /* Màu hồng */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Nếu có thêm phần tử nội dung cần căn giữa */
+        .container {
+            text-align: center; /* Căn giữa văn bản */
+            
+            
+        }
+        a{
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff; /* Màu nền cho phần tử */
+            transition: all 0.5s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tạo bóng cho phần tử */
+        }
+        a:hover{
+            color: #ffb6c1;
+        }
+    </style>
 </head>
 <body>
-    <a href="./Will-you-be-my-Valentine--main/index.html">Bắt đầu</a>
+    <div class="container">
+        <a href="./Will-you-be-my-Valentine--main/index.html">BẮT ĐẦU</a>
+    </div>
 </body>
 </html>
